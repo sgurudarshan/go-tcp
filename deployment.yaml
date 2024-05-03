@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-tcp
+  labels:
+    app: go-tcp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-tcp
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: go-tcp
+        version: v1
+    spec:
+      containers:
+        - name: go-tcp
+          image: tcl1/pipeline-go:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_BASE_URL
+              value: "$(route)"
